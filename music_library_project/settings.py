@@ -81,7 +81,7 @@ DATABASES = {
         "NAME": "music_database",
         "HOST": "localhost",
         "USER": "root",
-        "PASSWORD": "Null"
+        "PASSWORD": "None1"
     }
 }
 
