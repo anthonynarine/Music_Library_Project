@@ -1,5 +1,5 @@
 
-
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -24,13 +24,19 @@ def song_list(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     
-@api_view(["Get"])
+@api_view(["GET","PUT","DELETE"])
 def song_detail (request, pk):
-    try:
-        song = Song.objects.get(pk=pk)
+    song = get_object_or_404(Song,pk=pk)
+    if request.method == "GET":
         serializer = SongSerializer(song)
         return Response(serializer.data)
-    except Song.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    elif request.method == "PUT":
+        serializer = SongSerializer(song, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    elif request.method == "DELETE":
+        song.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-    
+
