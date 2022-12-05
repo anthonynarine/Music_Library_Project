@@ -7,7 +7,6 @@ from .serializers import SongSerializer
 from .models import Song
 
 
-
 # Create your views here.
 @api_view(["GET", "POST"])
 def song_list(request): 
